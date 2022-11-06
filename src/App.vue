@@ -1,21 +1,40 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
+  <!--<header>
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
     </div>
   </header>
 
-  <main>
-    <TheWelcome />
-  </main>
+  <main>-->
+        <Renderer ref="renderer">
+          <Camera :position="{ z: 10 }" />
+          <Scene>
+            <PointLight :position="{ y: 50, z: 50 }" />
+            <Box ref="box" :rotation="{ y: Math.PI / 3, z: Math.PI / 4 }">
+              <LambertMaterial />
+            </Box>
+          </Scene>
+        </Renderer>
+  <!--</main>-->
 </template>
+
+<script>
+import { Box, Camera, LambertMaterial, PointLight, Renderer, Scene } from 'troisjs';
+export default {
+	name: 'App',
+	components: {
+    Box, Camera, LambertMaterial, PointLight, Renderer, Scene 
+  },
+    mounted() {
+    const renderer = this.$refs.renderer;
+    const box = this.$refs.box.mesh;
+    renderer.onBeforeRender(() => {
+      box.rotation.x += 0.01;
+    });
+  },
+}
+</script>
 
 <style scoped>
 header {
