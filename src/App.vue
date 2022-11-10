@@ -7,32 +7,47 @@
   </header>
 
   <main>-->
-        <Renderer ref="renderer">
+    <div class="espace">
+        <Renderer resize="window" orbit-ctrl ref="renderer" alpha="0">
           <Camera :position="{ z: 10 }" />
           <Scene>
-            <PointLight :position="{ y: 50, z: 50 }" />
-            <Box ref="box" :rotation="{ y: Math.PI / 3, z: Math.PI / 4 }">
-              <LambertMaterial />
+            <PointLight :position="{ x: 50, y: 50, z: 50 }" />
+            <AmbientLight />
+            <Sphere ref="sphere" :position="{ x: 50, y: 47, z: 45 }" :radius="8" :rotation="{ y: Math.PI / 2 }">
+              <BasicMaterial>
+                <Texture path="/splash-bg.jpg"  refraction :refraction-ratio="0.95" />
+              </BasicMaterial>
+            </Sphere>
+            <Box ref="box" :rotation="{ y: Math.PI / 4, z: Math.PI / 4 }" >
+              <PhysicalMaterial color="#FF9E80" />
             </Box>
+
           </Scene>
         </Renderer>
+    </div>
   <!--</main>-->
 </template>
 
 <script>
-import { Box, Camera, LambertMaterial, PointLight, Renderer, Scene } from 'troisjs';
+import { AmbientLight, BasicMaterial, Box, Camera, GltfModel, PhysicalMaterial, PointLight, Renderer, Scene, Sphere, Texture } from 'troisjs';
 export default {
 	name: 'App',
 	components: {
-    Box, Camera, LambertMaterial, PointLight, Renderer, Scene 
+    AmbientLight, BasicMaterial, Box, Camera, GltfModel, PhysicalMaterial, PointLight, Renderer, Scene , Sphere, Texture
   },
     mounted() {
-    const renderer = this.$refs.renderer;
+    /*const renderer = this.$refs.renderer;
     const box = this.$refs.box.mesh;
     renderer.onBeforeRender(() => {
       box.rotation.x += 0.01;
-    });
+    });*/
+    function onReady(){
+      return{
+        onReady
+      }
+    }
   },
+
 }
 </script>
 
@@ -62,5 +77,11 @@ header {
     place-items: flex-start;
     flex-wrap: wrap;
   }
+}
+
+.espace {
+  /*background: url('/nightSky.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;*/
 }
 </style>
